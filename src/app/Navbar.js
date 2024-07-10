@@ -1,8 +1,6 @@
-
-
 const Navbar = ({ userName, userInitials }) => {
   return (
-    <nav className="fixed top-0  w-4/5 bg-white shadow-md py-4 px-6 flex items-center justify-between z-10">
+    <nav className="fixed top-0 w-full  md:w-4/5 bg-white shadow-md py-4 px-6 flex items-center justify-between z-10">
       {/* Title on the left */}
       <h1 className="text-gray-800 text-2xl font-bold">Customers</h1>
 

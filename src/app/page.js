@@ -23,13 +23,25 @@ export default function Home() {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
+    
+    const filtered = CustomersData.filter((customer) => {
+      const searchText = term.toLowerCase();
+      return (
+        customer.customer_name.toLowerCase().includes(searchText) ||
+        customer.location.toLowerCase().includes(searchText) ||
+        customer.phone.toLowerCase().includes(searchText) ||
+        customer.gender.toLowerCase().includes(searchText)
+      );
+    });
+  
+    setCustomers(filtered);
+    setCurrentPage(1);
   };
 
   const handleSort = (field) => {
     setSortBy(field);
   };
   
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -37,7 +49,6 @@ export default function Home() {
   const handleNewGroup = () => {
     setGroups([...groups, { filters: [], logicalOperators: [] }]);
   };
-  
 
   const handleFilterApply = (newFilters, newLogicalOperators, groupIndex = 0) => {
     const newGroups = [...groups];
@@ -74,6 +85,7 @@ export default function Home() {
         customer.phone.toLowerCase().includes(searchText) ||
         customer.gender.toLowerCase().includes(searchText)
       );
+      
   
       if (newGroups.length === 0) return matchesSearch;
   
@@ -163,17 +175,18 @@ export default function Home() {
   const userInitials = userName ? userName.slice(0, 2).toUpperCase() : ""; 
 
   return (
-    <div className="container gap-2 h-screen bg-gray-50 flex">
-      <div>
+    <div className="container gap-2 h-screen bg-gray-50 flex flex-col md:flex-row">
+      <div className="w-full md:w-1/5">
         <Sidebar />
       </div>
-      <div className='w-full overflow-y-scroll'> 
+      <div className="w-full md:w-4/5 overflow-y-scroll"> 
         <Navbar userName={userName} userInitials={userInitials} />
         <Search 
           onSearch={handleSearch} 
           onFilterApply={handleFilterApply} 
           filters={filters}
           groups={groups}
+          setGroups={setGroups}
           onNewGroup={handleNewGroup}
           groupRelation={groupRelation}
           setGroupRelation={setGroupRelation}

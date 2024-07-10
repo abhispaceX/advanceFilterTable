@@ -3,7 +3,7 @@ import { useState } from 'react';
 import FilterModal from './filterModel';
 import { IoMdArrowDropdown } from "react-icons/io";
 
-export default function Search({ onSearch, onFilterApply, groups, onNewGroup, groupRelation, setGroupRelation }) {
+export default function Search({ onSearch, onFilterApply, groups, onNewGroup, groupRelation, setGroupRelation,setGroups }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [modalShow, setModalShow] = useState(false);
@@ -63,11 +63,19 @@ export default function Search({ onSearch, onFilterApply, groups, onNewGroup, gr
   const handleClearAllFilters = () => {
     const newGroups = groups.map(() => ({ filters: [], logicalOperators: [] }));
     onFilterApply(newGroups[0].filters, newGroups[0].logicalOperators, 0);
+  
   };
+  const handleClearAllGroups=()=>{
+      const newGroups = [{ filters: [], logicalOperators: [] }];
+      setGroups(newGroups);
+      onFilterApply(newGroups[0].filters, newGroups[0].logicalOperators, 0);
+  }
   const handleClearGroupFilters = (groupIndex) => {
     const newGroups = [...groups];
     newGroups[groupIndex].filters = [];
+    setGroups(newGroups)
     newGroups[groupIndex].logicalOperators = [];
+    
     onFilterApply(newGroups[groupIndex].filters, newGroups[groupIndex].logicalOperators, groupIndex);
   };
   
@@ -81,10 +89,10 @@ export default function Search({ onSearch, onFilterApply, groups, onNewGroup, gr
   const showAdvanceFilters = () => {
     setShowadv(!showAdv);
   };
-  const totalFilters = groups.reduce((total, group) => total + group.filters.length, 0);
+  const totalFilters = groups?.reduce((total, group) => total + group.filters.length, 0);
 
   return (
-    <div className='flex flex-col mt-24'>
+    <div className='flex flex-col w-full mt-24'>
       <div className='bg-white mb-5'>
         <div className="relative flex w-full py-2 mb-6 rounded-lg border-b">
           <form className="flex justify-end w-6/12 border-r">
@@ -169,6 +177,7 @@ export default function Search({ onSearch, onFilterApply, groups, onNewGroup, gr
                     )}
                   </div>
                 ))}
+                
                 {!showDropdown || activeGroupIndex !== groupIndex ? (
                   <button
                     type="button"
@@ -215,6 +224,7 @@ export default function Search({ onSearch, onFilterApply, groups, onNewGroup, gr
               )}
             </div>
           ))} 
+          {totalFilters===2 &&
           <div className='bg-white'>
             <div className="mt-4 p-4 rounded-lg">
               <button
@@ -227,12 +237,13 @@ export default function Search({ onSearch, onFilterApply, groups, onNewGroup, gr
               <button
                 type="button"
                 className="p-2 mx-2 h-12 text-sm bg-red-200 hover:bg-red-100 rounded-lg w-32"
-                onClick={handleClearAllFilters}
+                onClick={handleClearAllGroups}
               >
                 Clear Groups
               </button>
             </div>
           </div>
+}
         </div>
       )}
       
