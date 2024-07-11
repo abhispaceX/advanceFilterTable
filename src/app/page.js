@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import CustomerTable from './customerTable';
+import CustomerTable from './customerTable'
 import Sidebar from './Sidebar';
 import Search from './searchBar';
 import Pagination from './pagination';

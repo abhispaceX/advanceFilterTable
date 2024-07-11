@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className="w-full bg-white text-black h-full">
       <div className="p-4 text-2xl font-bold">
-        Zithara.ai
+        Company.ai
       </div>
       <div className="p-4">
         <div className="mb-4">

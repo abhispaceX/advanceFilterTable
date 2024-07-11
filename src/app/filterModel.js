@@ -91,7 +91,7 @@ export default function FilterModal({ show, onHide, onFilterApply, selectedField
                       value={value}
                       onChange={(e) => setValue(e.target.value)}
                     >
-                      {selectedCriteria === 'equals to ' ? (
+                      {selectedCriteria === 'equals to' ? (
                     <>
                       <option value=""></option>
                       <option value="male">Male</option>
